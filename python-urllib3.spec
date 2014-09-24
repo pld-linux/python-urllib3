@@ -5,12 +5,12 @@
 %define 	module	urllib3
 Summary:	HTTP library with thread-safe connection pooling, file post, and more
 Name:		python-%{module}
-Version:	1.8
+Version:	1.9.1
 Release:	1
 License:	MIT
 Group:		Development/Languages/Python
 Source0:	https://pypi.python.org/packages/source/u/urllib3/%{module}-%{version}.tar.gz
-# Source0-md5:	d664781c08f98a83f28df087b6edfdca
+# Source0-md5:	c9358c5a85dd6aa3942f5121efed064d
 URL:		http://urllib3.readthedocs.org/
 %if %{with python2}
 BuildRequires:	python-modules >= 1:2.7
