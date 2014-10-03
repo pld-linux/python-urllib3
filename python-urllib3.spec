@@ -1,9 +1,11 @@
+#
 # Conditional build:
-%bcond_without  python2         # build python 2 module
-%bcond_without  python3         # build python 3 module
+%bcond_without	python2	# CPython 2.x module
+%bcond_without	python3	# CPython 3.x module
 #
 %define 	module	urllib3
 Summary:	HTTP library with thread-safe connection pooling, file post, and more
+Summary(pl.UTF-8):	Biblioteka HTTP z bezpieczną wątkowo pulą połączeń, wysyłaniem plików itd.
 Name:		python-%{module}
 Version:	1.9.1
 Release:	1
@@ -16,7 +18,7 @@ URL:		http://urllib3.readthedocs.org/
 BuildRequires:	python-modules >= 1:2.7
 %endif
 %if %{with python3}
-BuildRequires:	python3-modules >= 3.2
+BuildRequires:	python3-modules >= 1:3.2
 %endif
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.219
@@ -25,7 +27,7 @@ BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Python HTTP module with connection pooling and file POST abilities.
+Python 2 HTTP module with connection pooling and file POST abilities.
 Features are:
 - Re-use the same socket connection for multiple requests (with
   optional client-side certificate verification).
@@ -33,14 +35,25 @@ Features are:
 - Built-in redirection and retries (optional).
 - Supports gzip and deflate decoding.
 - Thread-safe and sanity-safe.
+
+%description -l pl.UTF-8
+Moduł HTTP dla Pythona 2 z pulą połączeń i możliwością wysyłania
+plików metodą POST. Możliwości:
+- używanie tego samego połączenia dla wielu żądań (z opcjonalną
+  weryfikacją certyfikatu po stronie klienta)
+- wysyłanie plików (encode_multipart_formdata)
+- wbudowane przekierowania i ponawianie prób (opcjonalne)
+- obsługa kodowań gzip i deflate
+- bezpieczeństwo względem wątków.
 
 %package -n python3-urllib3
 Summary:	HTTP library with thread-safe connection pooling, file post, and more
+Summary(pl.UTF-8):	Biblioteka HTTP z bezpieczną wątkowo pulą połączeń, wysyłaniem plików itd.
 Group:		Development/Languages/Python
-Requires:	python3-modules >= 3.2
+Requires:	python3-modules >= 1:3.2
 
 %description -n python3-urllib3
-Python HTTP module with connection pooling and file POST abilities.
+Python 3 HTTP module with connection pooling and file POST abilities.
 Features are:
 - Re-use the same socket connection for multiple requests (with
   optional client-side certificate verification).
@@ -48,6 +61,16 @@ Features are:
 - Built-in redirection and retries (optional).
 - Supports gzip and deflate decoding.
 - Thread-safe and sanity-safe.
+
+%description -n python3-urllib3 -l pl.UTF-8
+Moduł HTTP dla Pythona 3 z pulą połączeń i możliwością wysyłania
+plików metodą POST. Możliwości:
+- używanie tego samego połączenia dla wielu żądań (z opcjonalną
+  weryfikacją certyfikatu po stronie klienta)
+- wysyłanie plików (encode_multipart_formdata)
+- wbudowane przekierowania i ponawianie prób (opcjonalne)
+- obsługa kodowań gzip i deflate
+- bezpieczeństwo względem wątków.
 
 %prep
 %setup -q -n %{module}-%{version}
@@ -77,7 +100,7 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %if %{with python3}
-%{__python3} setup.py  \
+%{__python3} setup.py \
 	build -b py3 \
 	install \
 	--skip-build \
@@ -97,9 +120,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc CHANGES.rst CONTRIBUTORS.txt README.rst
 %{py_sitescriptdir}/%{module}
-%if "%{py_ver}" > "2.4"
 %{py_sitescriptdir}/%{module}-%{version}-py*.egg-info
-%endif
 %endif
 
 %if %{with python3}
