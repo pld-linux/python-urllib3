@@ -1,27 +1,46 @@
+# TODO: use system six, [backports.]ssl_match_hostname
 #
 # Conditional build:
 %bcond_without	python2	# CPython 2.x module
 %bcond_without	python3	# CPython 3.x module
+%bcond_with	tests	# test target (uses network etc.)
 #
 %define 	module	urllib3
 Summary:	HTTP library with thread-safe connection pooling, file post, and more
 Summary(pl.UTF-8):	Biblioteka HTTP z bezpieczną wątkowo pulą połączeń, wysyłaniem plików itd.
 Name:		python-%{module}
-Version:	1.10.2
-Release:	3
+Version:	1.14
+Release:	1
 License:	MIT
 Group:		Development/Languages/Python
 Source0:	https://pypi.python.org/packages/source/u/urllib3/%{module}-%{version}.tar.gz
-# Source0-md5:	e5b04971d8e6a77b591284d407e810fb
+# Source0-md5:	5e1407428ac33b521c71a7ac273b3847
 URL:		http://urllib3.readthedocs.org/
 %if %{with python2}
 BuildRequires:	python-modules >= 1:2.7
+%if %{with tests}
+BuildRequires:	python-PySocks >= 1.5.6
+BuildRequires:	python-PySocks < 2.0
+BuildRequires:	python-mock
+BuildRequires:	python-nose
+BuildRequires:	python-tornado
+# SO_REUSEPORT option
+BuildRequires:	uname(release) >= 3.9
+%endif
 %endif
 %if %{with python3}
 BuildRequires:	python3-modules >= 1:3.2
+%if %{with tests}
+BuildRequires:	python3-PySocks >= 1.5.6
+BuildRequires:	python3-PySocks < 2.0
+BuildRequires:	python3-nose
+BuildRequires:	python3-tornado
+# SO_REUSEPORT option
+BuildRequires:	uname(release) >= 3.9
+%endif
 %endif
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.710
+BuildRequires:	rpmbuild(macros) >= 1.714
 Requires:	python-modules >= 1:2.7
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -75,42 +94,35 @@ plików metodą POST. Możliwości:
 %prep
 %setup -q -n %{module}-%{version}
 
+# this test requires Google App Engine SDK
+%{__rm} test/contrib/test_gae_manager.py
+
 %build
 %if %{with python2}
-%py_build -b py2
+%py_build %{?with_tests:test}
 %endif
 
 %if %{with python3}
-%py3_build -b py3
+%py3_build %{?with_tests:test}
 %endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %if %{with python2}
-%{__python} setup.py \
-	build -b py2 \
-	install \
-	--skip-build \
-	--optimize=2 \
-	--root=$RPM_BUILD_ROOT
-%py_ocomp $RPM_BUILD_ROOT%{py_sitescriptdir}
-%py_comp $RPM_BUILD_ROOT%{py_sitescriptdir}
+%py_install
+
+# already in Python 2.7+
+%{__rm} $RPM_BUILD_ROOT%{py_sitescriptdir}/urllib3/packages/ordered_dict.py*
 %py_postclean
 %endif
 
 %if %{with python3}
-%{__python3} setup.py \
-	build -b py3 \
-	install \
-	--skip-build \
-	--optimize=2 \
-	--root=$RPM_BUILD_ROOT
-%endif
+%py3_install
 
-# dummyserver is a part of unitstests
-%{__rm} -rf $RPM_BUILD_ROOT%{py_sitescriptdir}/dummyserver \
-	$RPM_BUILD_ROOT%{py3_sitescriptdir}/dummyserver
+# already in Python 2.7+
+%{__rm} $RPM_BUILD_ROOT%{py3_sitescriptdir}/urllib3/packages/{ordered_dict.py,__pycache__/ordered_dict.*.py*}
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -118,7 +130,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python2}
 %files
 %defattr(644,root,root,755)
-%doc CHANGES.rst CONTRIBUTORS.txt README.rst
+%doc CHANGES.rst CONTRIBUTORS.txt LICENSE.txt README.rst
 %{py_sitescriptdir}/%{module}
 %{py_sitescriptdir}/%{module}-%{version}-py*.egg-info
 %endif
@@ -126,7 +138,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python3}
 %files -n python3-urllib3
 %defattr(644,root,root,755)
-%doc CHANGES.rst CONTRIBUTORS.txt README.rst
+%doc CHANGES.rst CONTRIBUTORS.txt LICENSE.txt README.rst
 %{py3_sitescriptdir}/%{module}
 %{py3_sitescriptdir}/%{module}-%{version}-py*.egg-info
 %endif
