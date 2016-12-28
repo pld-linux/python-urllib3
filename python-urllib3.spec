@@ -10,7 +10,7 @@ Summary:	HTTP library with thread-safe connection pooling, file post, and more
 Summary(pl.UTF-8):	Biblioteka HTTP z bezpieczną wątkowo pulą połączeń, wysyłaniem plików itd.
 Name:		python-%{module}
 Version:	1.16
-Release:	1
+Release:	2
 License:	MIT
 Group:		Development/Languages/Python
 Source0:	https://pypi.python.org/packages/3b/f0/e763169124e3f5db0926bc3dbfcd580a105f9ca44cf5d8e6c7a803c9f6b5/%{module}-%{version}.tar.gz
