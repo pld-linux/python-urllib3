@@ -9,12 +9,12 @@
 Summary:	HTTP library with thread-safe connection pooling, file post, and more
 Summary(pl.UTF-8):	Biblioteka HTTP z bezpieczną wątkowo pulą połączeń, wysyłaniem plików itd.
 Name:		python-%{module}
-Version:	1.20
+Version:	1.22
 Release:	1
 License:	MIT
 Group:		Development/Languages/Python
-Source0:	https://pypi.python.org/packages/20/56/a6aa403b0998f857b474a538343ee483f5c02491bd1aebf61d42a3f60f77/%{module}-%{version}.tar.gz
-# Source0-md5:	34691d4e7e20a8e9cdb452ea24fc38e7
+Source0:	https://pypi.python.org/packages/ee/11/7c59620aceedcc1ef65e156cc5ce5a24ef87be4107c2b74458464e437a5d/urllib3-1.22.tar.gz
+# Source0-md5:	0da7bed3fe94bf7dc59ae37885cc72f7
 URL:		http://urllib3.readthedocs.org/
 %if %{with python2}
 BuildRequires:	python-modules >= 1:2.7
@@ -93,9 +93,6 @@ plików metodą POST. Możliwości:
 
 %prep
 %setup -q -n %{module}-%{version}
-
-# this test requires Google App Engine SDK
-%{__rm} test/contrib/test_gae_manager.py
 
 %build
 %if %{with python2}
