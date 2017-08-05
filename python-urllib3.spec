@@ -4,16 +4,17 @@
 %bcond_without	python2	# CPython 2.x module
 %bcond_without	python3	# CPython 3.x module
 %bcond_with	tests	# test target (uses network etc.)
-#
-%define 	module	urllib3
+
+%define		module		urllib3
+%define		pypi_name	urllib3
 Summary:	HTTP library with thread-safe connection pooling, file post, and more
 Summary(pl.UTF-8):	Biblioteka HTTP z bezpieczną wątkowo pulą połączeń, wysyłaniem plików itd.
 Name:		python-%{module}
 Version:	1.22
-Release:	1
+Release:	2
 License:	MIT
 Group:		Development/Languages/Python
-Source0:	https://pypi.python.org/packages/ee/11/7c59620aceedcc1ef65e156cc5ce5a24ef87be4107c2b74458464e437a5d/urllib3-1.22.tar.gz
+Source0:	https://files.pythonhosted.org/packages/source/u/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
 # Source0-md5:	0da7bed3fe94bf7dc59ae37885cc72f7
 URL:		http://urllib3.readthedocs.org/
 %if %{with python2}
@@ -108,17 +109,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %if %{with python2}
 %py_install
-
-# already in Python 2.7+
-%{__rm} $RPM_BUILD_ROOT%{py_sitescriptdir}/urllib3/packages/ordered_dict.py*
 %py_postclean
 %endif
 
 %if %{with python3}
 %py3_install
-
-# already in Python 2.7+
-%{__rm} $RPM_BUILD_ROOT%{py3_sitescriptdir}/urllib3/packages/{ordered_dict.py,__pycache__/ordered_dict.*.py*}
 %endif
 
 %clean
