@@ -1,0 +1,14 @@
+--- urllib3-1.24.1/docs/conf.py.orig	2018-10-05 23:00:05.000000000 +0200
++++ urllib3-1.24.1/docs/conf.py	2018-12-02 09:35:52.593757249 +0100
+@@ -27,7 +27,10 @@
+ # Mock some expensive/platform-specific modules so build will work.
+ # (https://read-the-docs.readthedocs.io/en/latest/faq.html#\
+ #  i-get-import-errors-on-libraries-that-depend-on-c-modules)
+-import mock
++try:
++    import mock
++except ImportError:
++    from unittest import mock
+ 
+ 
+ class MockModule(mock.Mock):

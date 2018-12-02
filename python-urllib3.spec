@@ -14,8 +14,10 @@ Version:	1.24.1
 Release:	1
 License:	MIT
 Group:		Development/Languages/Python
+#Source0Download: https://pypi.org/simple/urllib3/
 Source0:	https://files.pythonhosted.org/packages/source/u/urllib3/%{module}-%{version}.tar.gz
 # Source0-md5:	f3d8b1841539200c949a33e87e551d8e
+Patch0:		%{name}-mock.patch
 URL:		http://urllib3.readthedocs.org/
 %if %{with python2}
 BuildRequires:	python-modules >= 1:2.7
@@ -43,7 +45,7 @@ BuildRequires:	uname(release) >= 3.9
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 %if %{with doc}
-BuildRequires:	sphinx-pdg
+BuildRequires:	sphinx-pdg-3
 %endif
 Requires:	python-modules >= 1:2.7
 BuildArch:	noarch
@@ -108,6 +110,7 @@ Dokumentacja API modułu Pythona urllib3.
 
 %prep
 %setup -q -n %{module}-%{version}
+%patch0 -p1
 
 %build
 %if %{with python2}
@@ -120,6 +123,7 @@ Dokumentacja API modułu Pythona urllib3.
 
 %if %{with doc}
 %{__make} -C docs html \
+	SPHINXBUILD=sphinx-build-3 \
 	SPHINXOPTS=
 %endif
 
