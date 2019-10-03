@@ -10,13 +10,13 @@
 Summary:	HTTP library with thread-safe connection pooling, file post, and more
 Summary(pl.UTF-8):	Biblioteka HTTP z bezpieczną wątkowo pulą połączeń, wysyłaniem plików itd.
 Name:		python-%{module}
-Version:	1.24.1
+Version:	1.25.6
 Release:	1
 License:	MIT
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.org/simple/urllib3/
 Source0:	https://files.pythonhosted.org/packages/source/u/urllib3/%{module}-%{version}.tar.gz
-# Source0-md5:	f3d8b1841539200c949a33e87e551d8e
+# Source0-md5:	a7504a9fcb7ed4ffa482fe098c80b6d4
 Patch0:		%{name}-mock.patch
 URL:		http://urllib3.readthedocs.org/
 %if %{with python2}
