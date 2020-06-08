@@ -1,0 +1,14 @@
+--- urllib3-1.25.9/test/appengine/test_urlfetch.py.orig	2020-04-16 14:42:30.000000000 +0200
++++ urllib3-1.25.9/test/appengine/test_urlfetch.py	2020-06-08 06:18:42.266288014 +0200
+@@ -2,7 +2,10 @@
+ App Engine sandbox enabled that urllib3 appropriately uses the App
+ Engine-patched version of httplib to make requests."""
+ 
+-import httplib
++try:
++    import httplib
++except ImportError:
++    import http.client as httplib
+ import StringIO
+ 
+ from mock import patch
