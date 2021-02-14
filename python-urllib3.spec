@@ -10,16 +10,17 @@
 Summary:	HTTP library with thread-safe connection pooling, file post, and more
 Summary(pl.UTF-8):	Biblioteka HTTP z bezpieczną wątkowo pulą połączeń, wysyłaniem plików itd.
 Name:		python-%{module}
-Version:	1.25.9
+# note: maintain versions compatible with python-requests.spec
+Version:	1.26.2
 Release:	1
 License:	MIT
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.org/simple/urllib3/
 Source0:	https://files.pythonhosted.org/packages/source/u/urllib3/%{module}-%{version}.tar.gz
-# Source0-md5:	dbf9b868b90880b24b1ac278094e912e
+# Source0-md5:	2233256ccfe140a915f68703f8c2cc1f
 Patch0:		%{name}-mock.patch
 Patch1:		%{name}-httplib.patch
-URL:		http://urllib3.readthedocs.org/
+URL:		https://urllib3.readthedocs.io/
 %if %(locale -a | grep -q '^C\.utf8$'; echo $?)
 BuildRequires:	glibc-localedb-all
 %endif
@@ -56,8 +57,9 @@ BuildRequires:	uname(release) >= 3.9
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 %if %{with doc}
-BuildRequires:	python3-alabaster
-BuildRequires:	sphinx-pdg-3
+BuildRequires:	python3-furo
+BuildRequires:	python3-requests >= 2
+BuildRequires:	sphinx-pdg-3 >= 3.0
 %endif
 Requires:	python-modules >= 1:2.7
 BuildArch:	noarch
