@@ -12,34 +12,21 @@
  
  
  class MockModule(mock.Mock):
---- urllib3-1.25.9/test/test_connection.py.orig	2020-04-16 14:42:30.000000000 +0200
-+++ urllib3-1.25.9/test/test_connection.py	2020-06-07 22:20:50.841614447 +0200
-@@ -1,5 +1,8 @@
+--- urllib3-1.26.2/test/test_connection.py.orig	2021-01-17 21:03:32.174782572 +0100
++++ urllib3-1.26.2/test/test_connection.py	2021-01-17 21:06:45.107070701 +0100
+@@ -1,6 +1,9 @@
  import datetime
+ 
 -import mock
 +try:
 +    import mock
 +except ImportError:
 +    from unittest import mock
- 
  import pytest
  
---- urllib3-1.25.11/test/test_connectionpool.py.orig	2020-10-19 16:17:05.000000000 +0200
-+++ urllib3-1.25.11/test/test_connectionpool.py	2021-02-14 14:23:15.248962491 +0100
-@@ -2,7 +2,10 @@
- 
- import ssl
- import pytest
--from mock import Mock
-+try:
-+    from mock import Mock
-+except ImportError:
-+    from unittest.mock import Mock
- 
- from urllib3.connectionpool import (
-     connection_from_url,
---- urllib3-1.25.9/test/test_queue_monkeypatch.py.orig	2020-04-16 14:42:30.000000000 +0200
-+++ urllib3-1.25.9/test/test_queue_monkeypatch.py	2020-06-07 22:31:23.954851245 +0200
+ from urllib3.connection import RECENT_DATE, CertificateError, _match_hostname
+--- urllib3-1.26.2/test/test_queue_monkeypatch.py.orig	2021-01-17 21:03:32.174782572 +0100
++++ urllib3-1.26.2/test/test_queue_monkeypatch.py	2021-01-17 21:07:04.446965928 +0100
 @@ -1,6 +1,9 @@
  from __future__ import absolute_import
  
@@ -48,26 +35,28 @@
 +    import mock
 +except ImportError:
 +    from unittest import mock
- 
  import pytest
  
---- urllib3-1.25.9/test/test_response.py.orig	2020-04-16 14:42:30.000000000 +0200
-+++ urllib3-1.25.9/test/test_response.py	2020-06-07 22:25:48.023337809 +0200
-@@ -7,7 +7,10 @@
- from io import BytesIO, BufferedReader, TextIOWrapper
+ from urllib3 import HTTPConnectionPool
+--- urllib3-1.26.2/test/test_response.py.orig	2021-01-17 21:03:32.174782572 +0100
++++ urllib3-1.26.2/test/test_response.py	2021-01-17 21:07:27.800172746 +0100
+@@ -9,7 +9,10 @@
+ from io import BufferedReader, BytesIO, TextIOWrapper
+ from test import onlyBrotlipy
  
- import pytest
 -import mock
 +try:
 +    import mock
 +except ImportError:
 +    from unittest import mock
+ import pytest
  import six
  
- from urllib3.response import HTTPResponse, brotli
---- urllib3-1.25.11/test/test_retry.py.orig	2021-02-14 13:38:08.446959829 +0100
-+++ urllib3-1.25.11/test/test_retry.py	2021-02-14 13:39:36.619815489 +0100
-@@ -1,4 +1,7 @@
+--- urllib3-1.26.2/test/test_retry.py.orig	2021-01-17 21:03:32.174782572 +0100
++++ urllib3-1.26.2/test/test_retry.py	2021-01-17 21:07:44.043418082 +0100
+@@ -1,6 +1,9 @@
+ import warnings
+ 
 -import mock
 +try:
 +    import mock
@@ -75,32 +64,34 @@
 +    from unittest import mock
  import pytest
  
- from urllib3.response import HTTPResponse
---- urllib3-1.25.9/test/test_ssl.py.orig	2020-04-16 14:42:30.000000000 +0200
-+++ urllib3-1.25.9/test/test_ssl.py	2020-06-07 22:22:15.301156891 +0200
-@@ -1,4 +1,7 @@
+ from urllib3.exceptions import (
+--- urllib3-1.26.2/test/test_ssl.py.orig	2021-01-17 21:03:32.174782572 +0100
++++ urllib3-1.26.2/test/test_ssl.py	2021-01-17 21:07:59.646666886 +0100
+@@ -1,6 +1,9 @@
+ from test import notPyPy2
+ 
 -import mock
 +try:
 +    import mock
 +except ImportError:
 +    from unittest import mock
  import pytest
- from urllib3.util import ssl_
+ 
  from urllib3.exceptions import SNIMissingWarning
---- urllib3-1.25.9/test/test_util.py.orig	2020-04-16 14:42:30.000000000 +0200
-+++ urllib3-1.25.9/test/test_util.py	2020-06-07 22:21:18.341465468 +0200
-@@ -7,7 +7,10 @@
- import socket
- from itertools import chain
+--- urllib3-1.26.2/test/test_util.py.orig	2021-01-17 21:03:32.178115887 +0100
++++ urllib3-1.26.2/test/test_util.py	2021-01-17 21:08:29.376505825 +0100
+@@ -9,7 +9,10 @@
+ from test import notBrotlipy, onlyBrotlipy, onlyPy2, onlyPy3
  
--from mock import patch, Mock
-+try:
-+    from mock import patch, Mock
-+except ImportError:
-+    from unittest.mock import patch, Mock
  import pytest
+-from mock import Mock, patch
++try:
++    from mock import Mock, patch
++except ImportError:
++    from unittest.mock import Mock, patch
  
- from urllib3 import add_stderr_logger, disable_warnings
+ from urllib3 import add_stderr_logger, disable_warnings, util
+ from urllib3.exceptions import (
 --- urllib3-1.25.9/test/contrib/test_pyopenssl.py.orig	2020-04-16 14:42:30.000000000 +0200
 +++ urllib3-1.25.9/test/contrib/test_pyopenssl.py	2020-06-07 22:30:33.011793894 +0200
 @@ -1,7 +1,10 @@
@@ -115,34 +106,33 @@
  import pytest
  
  try:
---- urllib3-1.25.9/test/contrib/test_pyopenssl_dependencies.py.orig	2020-04-16 14:42:30.000000000 +0200
-+++ urllib3-1.25.9/test/contrib/test_pyopenssl_dependencies.py	2020-06-07 22:31:07.291608185 +0200
-@@ -1,7 +1,10 @@
+--- urllib3-1.26.2/test/contrib/test_pyopenssl_dependencies.py.orig	2021-01-17 21:10:14.782601458 +0100
++++ urllib3-1.26.2/test/contrib/test_pyopenssl_dependencies.py	2021-01-17 21:12:17.745268645 +0100
+@@ -1,6 +1,9 @@
  # -*- coding: utf-8 -*-
  import pytest
- 
--from mock import patch, Mock
+-from mock import Mock, patch
 +try:
-+    from mock import patch, Mock
++    from mock import Mock, patch
 +except ImportError:
-+    from unittest.mock import patch, Mock
++    from unittest.mock import Mock, patch
  
  try:
-     from urllib3.contrib.pyopenssl import inject_into_urllib3, extract_from_urllib3
---- urllib3-1.25.9/test/with_dummyserver/test_connectionpool.py.orig	2020-04-16 14:42:30.000000000 +0200
-+++ urllib3-1.25.9/test/with_dummyserver/test_connectionpool.py	2020-06-07 22:20:19.205119170 +0200
-@@ -6,7 +6,10 @@
- import warnings
- import pytest
+     from urllib3.contrib.pyopenssl import extract_from_urllib3, inject_into_urllib3
+--- urllib3-1.26.2/test/with_dummyserver/test_connectionpool.py.orig	2021-01-17 21:10:14.782601458 +0100
++++ urllib3-1.26.2/test/with_dummyserver/test_connectionpool.py	2021-01-17 21:12:56.965056174 +0100
+@@ -10,7 +10,10 @@
+ from test import LONG_TIMEOUT, SHORT_TIMEOUT, onlyPy2
+ from threading import Event
  
 -import mock
 +try:
 +    import mock
 +except ImportError:
 +    from unittest import mock
+ import pytest
+ import six
  
- from .. import TARPIT_HOST, VALID_SOURCE_ADDRESSES, INVALID_SOURCE_ADDRESSES
- from ..port_helpers import find_unused_port
 --- urllib3-1.25.9/test/with_dummyserver/test_https.py.orig	2020-04-16 14:42:30.000000000 +0200
 +++ urllib3-1.25.9/test/with_dummyserver/test_https.py	2020-06-07 22:18:03.172522789 +0200
 @@ -8,7 +8,10 @@
@@ -157,17 +147,17 @@
  import pytest
  import trustme
  
---- urllib3-1.25.9/test/with_dummyserver/test_socketlevel.py.orig	2020-04-16 14:42:30.000000000 +0200
-+++ urllib3-1.25.9/test/with_dummyserver/test_socketlevel.py	2020-06-07 22:18:29.705712380 +0200
-@@ -44,7 +44,10 @@
- import shutil
- import ssl
- import tempfile
+--- urllib3-1.26.2/test/with_dummyserver/test_socketlevel.py.orig	2021-01-17 21:10:14.782601458 +0100
++++ urllib3-1.26.2/test/with_dummyserver/test_socketlevel.py	2021-01-17 21:18:48.833149940 +0100
+@@ -52,7 +52,10 @@
+ )
+ from threading import Event
+ 
 -import mock
 +try:
 +    import mock
 +except ImportError:
 +    from unittest import mock
- 
  import pytest
  import trustme
+ 
