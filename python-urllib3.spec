@@ -11,13 +11,13 @@ Summary:	HTTP library with thread-safe connection pooling, file post, and more
 Summary(pl.UTF-8):	Biblioteka HTTP z bezpieczną wątkowo pulą połączeń, wysyłaniem plików itd.
 Name:		python-%{module}
 # note: maintain versions compatible with python-requests.spec
-Version:	1.26.2
+Version:	1.26.8
 Release:	1
 License:	MIT
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.org/simple/urllib3/
 Source0:	https://files.pythonhosted.org/packages/source/u/urllib3/%{module}-%{version}.tar.gz
-# Source0-md5:	2233256ccfe140a915f68703f8c2cc1f
+# Source0-md5:	50831ca7b19bbe2781abb0a4c2d51760
 Patch0:		%{name}-mock.patch
 Patch1:		%{name}-httplib.patch
 URL:		https://urllib3.readthedocs.io/
@@ -190,7 +190,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python2}
 %files
 %defattr(644,root,root,755)
-%doc CHANGES.rst CONTRIBUTORS.txt LICENSE.txt README.rst
+%doc CHANGES.rst LICENSE.txt README.rst
 %{py_sitescriptdir}/%{module}
 %{py_sitescriptdir}/%{module}-%{version}-py*.egg-info
 %endif
@@ -198,7 +198,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python3}
 %files -n python3-urllib3
 %defattr(644,root,root,755)
-%doc CHANGES.rst CONTRIBUTORS.txt LICENSE.txt README.rst
+%doc CHANGES.rst LICENSE.txt README.rst
 %{py3_sitescriptdir}/%{module}
 %{py3_sitescriptdir}/%{module}-%{version}-py*.egg-info
 %endif
