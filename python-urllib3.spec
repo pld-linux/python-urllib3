@@ -25,6 +25,7 @@ URL:		https://urllib3.readthedocs.io/
 BuildRequires:	glibc-localedb-all
 %endif
 %if %{with python2}
+BuildRequires:	python >= 1:2.7
 BuildRequires:	python-modules >= 1:2.7
 %if %{with tests}
 BuildRequires:	python-PySocks >= 1.7.1
@@ -45,6 +46,7 @@ BuildRequires:	uname(release) >= 3.9
 %endif
 %endif
 %if %{with python3}
+BuildRequires:	python3 >= 1:3.5
 BuildRequires:	python3-modules >= 1:3.5
 %if %{with tests}
 BuildRequires:	python3-PySocks >= 1.7.1
