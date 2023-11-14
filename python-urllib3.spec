@@ -27,6 +27,7 @@ BuildRequires:	glibc-localedb-all
 %if %{with python2}
 BuildRequires:	python >= 1:2.7
 BuildRequires:	python-modules >= 1:2.7
+BuildRequires:	python-setuptools
 %if %{with tests}
 BuildRequires:	python-PySocks >= 1.7.1
 BuildRequires:	python-PySocks < 2.0
@@ -48,6 +49,7 @@ BuildRequires:	uname(release) >= 3.9
 %if %{with python3}
 BuildRequires:	python3 >= 1:3.5
 BuildRequires:	python3-modules >= 1:3.5
+BuildRequires:	python3-setuptools
 %if %{with tests}
 BuildRequires:	python3-PySocks >= 1.7.1
 BuildRequires:	python3-PySocks < 2.0
